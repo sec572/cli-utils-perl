@@ -16,9 +16,9 @@
 
 ################################################################################
 #
-# Name:		sum.pl
-# Description:	A simple script to provide the numeric sum of text read in via
-#		STDIN or an input file which matches a number.
+# Name:		max.pl
+# Description:	A simple script to provide the largest number within the text
+#		read in via STDIN or an input file which matches a number.
 # Author:	Eddie N. (en@sector572.com)
 #
 ################################################################################
@@ -59,7 +59,7 @@ else
 
 if($fileHandle && tell($fileHandle) != -1)
 {
-	my $total = 0;
+	my $number = undef;
 
 	while(<$fileHandle>)
 	{
@@ -67,7 +67,10 @@ if($fileHandle && tell($fileHandle) != -1)
 
 		if($_ =~ m/^(-)?[\d]*(\.[\d]+)?$/)
 		{
-			$total += $_;
+			if($_ > $number || $number == undef)
+			{
+				$number = $_;
+			}
 		}
 		else
 		{
@@ -78,7 +81,7 @@ if($fileHandle && tell($fileHandle) != -1)
 		}
 	}
 
-	print "$total\n";
+	print "$number\n";
 
 	close($fileHandle);
 }

@@ -16,9 +16,9 @@
 
 ################################################################################
 #
-# Name:		sum.pl
-# Description:	A simple script to provide the numeric sum of text read in via
-#		STDIN or an input file which matches a number.
+# Name:		avg.pl
+# Description:	A simple script to provide the numeric average of text read in
+#		via STDIN or an input file which matches a number.
 # Author:	Eddie N. (en@sector572.com)
 #
 ################################################################################
@@ -43,6 +43,7 @@ elsif($opt_h && !$opt_i && !$opt_v)
 my $fileName = $opt_i;
 my $verbose = $opt_v;
 my $fileHandle;
+my $numbers = 0;
 
 if(length($fileName) > 0)
 {
@@ -67,6 +68,7 @@ if($fileHandle && tell($fileHandle) != -1)
 
 		if($_ =~ m/^(-)?[\d]*(\.[\d]+)?$/)
 		{
+			$numbers++;
 			$total += $_;
 		}
 		else
@@ -78,7 +80,12 @@ if($fileHandle && tell($fileHandle) != -1)
 		}
 	}
 
-	print "$total\n";
+
+	if($numbers > 0 && $total > 0)
+	{
+		my $average = $total / $numbers;
+		print "$average\n";
+	}
 
 	close($fileHandle);
 }
